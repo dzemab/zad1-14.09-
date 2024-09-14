@@ -1,0 +1,42 @@
+fun main() {
+    // Request array dimensions
+    println("Enter the number of rows:")
+    val rows = readLine()?.toInt() ?: return
+    println("Enter the number of columns:")
+    val cols = readLine()?.toInt() ?: return
+
+    // Create a 2D array
+    val array = Array(rows) { IntArray(cols) }
+
+    // Input 3-digit numbers
+    println("Enter ${rows * cols} three-digit numbers:")
+    for (i in 0 until rows) {
+        var j = 0
+        while (j < cols) {
+            val number = readLine()?.toIntOrNull()
+            if (number != null && number in 100..999) {
+                array[i][j] = number
+                j++ // increment j only when input is valid
+            } else {
+                println("Invalid input. Please enter a three-digit number.")
+            }
+        }
+    }
+
+    // Print the array
+    println("Received array:")
+    for (row in array) {
+        println(row.joinToString("\t"))
+    }
+
+    // Count unique digits
+    val uniqueDigits = mutableSetOf<Char>()
+    for (row in array) {
+        for (num in row) {
+            uniqueDigits.addAll(num.toString().toCharArray().map { it })
+        }
+    }
+
+    // Print the result
+    println("The array uses ${uniqueDigits.size} different digits.")
+}
